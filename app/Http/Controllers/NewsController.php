@@ -46,8 +46,11 @@ class NewsController extends Controller
 
     public function destroy(string $id)
     {
+        if(auth()->user()->role!=='admin'){	
+         abort(403,'Bạn không có quyền xóa tin tức.');	
+    }	
     $news=News::findOrFail($id);
     $news->delete();
-    return redirect()->route('news.index');
+    return redirect()->route('admin.news.index')->with('success','Đã xóa tin tức thành công');	
     }
 }

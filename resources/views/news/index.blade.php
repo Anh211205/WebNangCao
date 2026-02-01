@@ -4,9 +4,11 @@
 <h1>Danh sách tin tức</h1>
 
 @auth
-    <a href="{{ route('news.create') }}" class="btn btn-primary">
-        Thêm tin mới
-    </a>
+    @if(auth()->user()->role === 'admin')
+        <a href="{{ route('news.create') }}" class="btn btn-primary">
+            Thêm tin mới
+        </a>
+    @endif
 @endauth
 
 <ul>
@@ -23,15 +25,17 @@
         @endif
 
         @auth
-            <a href="{{ route('news.edit', $item->id) }}">Sửa</a>
+            @if(auth()->user()->role === 'admin')
+                <a href="{{ route('news.edit', $item->id) }}">Sửa</a>
 
-            <form action="{{ route('news.destroy', $item->id) }}"
-                  method="POST"
-                  style="display:inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Xóa</button>
-            </form>
+                <form action="{{ route('news.destroy', $item->id) }}"
+                      method="POST"
+                      style="display:inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Xóa</button>
+                </form>
+            @endif
         @endauth
     </li>
 @endforeach
@@ -41,4 +45,3 @@
     {{ $news->links() }}
 </div>
 @endsection
-

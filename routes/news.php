@@ -14,9 +14,11 @@ Route::post('news/{news}/comments', [CommentController::class, 'store'])
     ->name('news.comments.store');
 
 // Bảo vệ thêm / sửa / xóa (L14)
-Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth'])->group(function () {
     Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
     Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+});
+    Route::middleware(['auth','check.admin'])->group(function (){
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::put('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
