@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use	App\Models\Comment;
+use App\Models\News;	
+use	Illuminate\Http\Request;	
+use	Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -25,9 +27,18 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,News	$news)
     {
-        //
+    $data	=	$request->validate([	
+    'title'	=>	'nullable|string|max:255',	
+    'content'	=>	'required|string|min:2',	
+]);	
+
+    $data['news_id']	=	$news->id;	
+    $data['author_id']	=	Auth::check()	?	Auth::id()	:	null;	
+    Comment::create($data);		
+     return	redirect()->route('news.show',	$news)->with('success',	'Bình	luận	đã	được	
+gửi.');	
     }
 
     /**

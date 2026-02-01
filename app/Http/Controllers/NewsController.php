@@ -26,7 +26,9 @@ class NewsController extends Controller
 
     public function show(string $id)
     {
-        echo "show method called";
+        $news=News::findOrFail($id);
+        $comments=$news->comments()->latest()->paginate(5);
+        return view('news.show',compact('news','comments'));
     }
 
     public function edit(string $id)
