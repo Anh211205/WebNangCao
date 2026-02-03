@@ -15,21 +15,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($orders as $order)
+            @foreach($products as $products)
             <tr>
-                <td>#{{ $order->id }}</td>
-                <td>{{ $order->customer_name }}</td>
-                <td>{{ number_format($order->total) }} đ</td>
-                <td>{{ $order->status }}</td>
+                <td>#{{ $products->id }}</td>
+                <td>{{ $products->customer_name }}</td>
+                <td>{{ number_format($products->total) }} đ</td>
+                <td>{{ $products->status }}</td>
                 <td>
                     <form method="POST"
-                        action="{{ route('admin.orders.updateStatus', $order->id) }}">
+                          action="{{ route('admin.products.updateStatus', $products->id) }}">
                         @csrf
                         <select name="status" class="form-select form-select-sm">
-                            <option {{ $order->status == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
-                            <option {{ $order->status == 'Đang giao' ? 'selected' : '' }}>Đang giao</option>
-                            <option {{ $order->status == 'Hoàn thành' ? 'selected' : '' }}>Hoàn thành</option>
-                            <option {{ $order->status == 'Hủy' ? 'selected' : '' }}>Hủy</option>
+                            <option {{ $order->status=='Đang xử lý'?'selected':'' }}>Đang xử lý</option>
+                            <option {{ $order->status=='Đang giao'?'selected':'' }}>Đang giao</option>
+                            <option {{ $order->status=='Hoàn thành'?'selected':'' }}>Hoàn thành</option>
+                            <option {{ $order->status=='Hủy'?'selected':'' }}>Hủy</option>
                         </select>
                         <button class="btn btn-sm btn-primary mt-1">Lưu</button>
                     </form>
@@ -40,3 +40,4 @@
     </table>
 </div>
 @endsection
+
